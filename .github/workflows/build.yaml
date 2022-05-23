@@ -40,9 +40,10 @@ jobs:
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=le1234567_pet-clinic-example
     - name: Compile, build and push
       run: |
-        #### AUFGABE 3 DOCKER BUILD UND PUSH
-          # an dieser Stelle wird die Aufgabe 3 bearbeitet: heroku login, docker build, docker push
-        
+        heroku container:login 
+        mvn package
+        docker build --tag registry.heroku.com/${APP_NAME}/web -f Dockerfile .
+        docker push registry.heroku.com/${APP_NAME}/web
     - name: Release
       run: |
         #### AUFGABE 4 DEPLOYMENT AUF HEROKU
